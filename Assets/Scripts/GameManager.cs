@@ -11,17 +11,19 @@ public class GameManager : MonoBehaviour {
     private Text timePassedText;
 
     private int timePassed;
-    public float realTimePerTimePass;
+    public float realTimePerSection;
+    private float realTimePerTimePass;
     private float timeSinceLastTimePass;
 
     private TimeScale currentTimeScale;
 
     // Use this for initialization
 	void Start () {
-        timePassedText = timePassedText.GetComponent<Text>();
+        timePassedText = timePassedUI.GetComponent<Text>();
         InitializeTimeScaleObjects();
         timePassed = 0;
         timeSinceLastTimePass = 0;
+        realTimePerTimePass = realTimePerSection / currentTimeScale.numUnitsUntilNextTimeScale;
 	}
 
     // Update is called once per frame
@@ -75,6 +77,7 @@ public class GameManager : MonoBehaviour {
             .Then(universeLifetimes);
 
         currentTimeScale = seconds;
+        Debug.Log(currentTimeScale);
     }
 
     public void SetShipVelocity(float vel)
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour {
         if (timePassed == currentTimeScale.numUnitsUntilNextTimeScale)
         {
             currentTimeScale = currentTimeScale.nextTimeScale;
+            realTimePerTimePass = realTimePerSection / currentTimeScale.numUnitsUntilNextTimeScale;
             timePassed = 1;
         }
     }

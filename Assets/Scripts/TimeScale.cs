@@ -14,7 +14,7 @@ public class TimeScale  {
     public TimeScale Then(TimeScale next)
     {
         nextTimeScale = next;
-        return this;
+        return next;
     }
 
     public string unit;
